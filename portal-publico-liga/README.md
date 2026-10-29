@@ -1,39 +1,32 @@
 # Portal público — Liga Local de Basquete
 
-Pacote de interface estática para ser adicionado ao repositório atual. Não altera nem substitui os arquivos existentes do projeto.
+O portal público utiliza o mesmo Firebase do painel administrativo. O painel grava os documentos e as páginas públicas fazem apenas leitura dos dados publicados.
 
-## Conteúdo incluído
+## Estrutura
 
-- Página inicial (`index.html`)
-- Jogos e resultados (`jogos.html`)
-- Classificação (`classificacao.html`)
-- Catálogo de equipes e perfil da equipe (`equipes.html`, `equipe.html`)
-- Catálogo de jogadores e perfil individual (`jogadores.html`, `jogador.html`)
-- Estatísticas (`estatisticas.html`)
-- Arquivo de temporadas e detalhe (`temporadas.html`, `temporada.html`)
-- História da liga (`historia.html`)
-- Notícias e detalhe de notícia (`noticias.html`, `noticia.html`)
-- Estilos compartilhados e renderização de conteúdo em `assets/`
+- `../admin-login.html`: login administrativo com Firebase Authentication.
+- `../admin.html`: painel protegido para cadastrar e editar dados.
+- `assets/portal.js`: renderização das páginas e leitura pública do Firestore.
+- `assets/portal.css`: identidade visual compartilhada do portal.
+- `../scripts/firebase-config.js`: inicialização única do Firebase.
+- `../firestore.rules`: regras de acesso do Firestore.
 
-## Como testar sem mexer no site existente
+## Coleções utilizadas
 
-1. Extraia a pasta `portal-publico-liga`.
-2. Copie a pasta inteira para a raiz do repositório `basquete-liga-local`, preservando o nome `portal-publico-liga`.
-3. Faça commit e push.
-4. Acesse `https://jhonathaalvs-cell.github.io/basquete-liga-local/portal-publico-liga/`.
+`jogadores`, `equipes`, `campeonatos`, `jogos`, `temporadas`, `noticias` e `estatisticas`.
 
-As imagens são referenciadas a partir dos ativos existentes em `../imagens/`. O pacote deve ser mantido dentro do repositório para esses caminhos funcionarem.
+Quando uma coleção ainda estiver vazia, a página correspondente mostra um estado vazio. O portal não inventa resultados, equipes ou atletas.
 
-## Quando decidir tornar o portal a página inicial
+## Execução local
 
-O `index.html` atual da raiz é o login. Não o sobrescreva antes de adaptar o fluxo administrativo. Faça uma cópia dele para uma rota administrativa escolhida por você, revise `scripts/login.js` para conferir os redirecionamentos pós-login e remova o cadastro público da interface administrativa. Depois, migre os arquivos públicos para a raiz e ajuste `ASSET_ROOT` de `../imagens/` para `imagens/` em `assets/portal.js`; revise também os links relativos e os caminhos das folhas de estilo.
+Abra a pasta raiz em um servidor HTTP, como a extensão Live Server do VS Code. Não abra os HTML diretamente com `file://`, porque os módulos do Firebase precisam de um servidor.
 
-**Importante:** esconder o caminho de administração não é controle de acesso. Antes de publicar mudanças, faça a autorização real do administrador no Firebase Authentication e proteja as operações de gravação no Firestore com regras de segurança. Isso está fora do escopo deste pacote.
+Exemplos:
 
-## Backend futuro
+- `http://localhost:5500/admin-login.html`
+- `http://localhost:5500/portal-publico-liga/index.html`
+- `http://localhost:5500/portal-publico-liga/jogadores.html`
 
-`assets/portal.js` centraliza os dados de demonstração no objeto `DEMO_DATA`. Substitua essa fonte por funções de leitura do Firebase ou por uma camada de serviços, mantendo as funções de renderização. A proposta de entidades é: temporadas, equipes, jogadores permanentes, participações por temporada, jogos, estatísticas, premiações e notícias.
+## Segurança
 
-## Aviso sobre os dados
-
-Os nomes de algumas equipes reutilizam logotipos que já estavam presentes no repositório; placares, campanhas, estatísticas, temporadas e notícias deste pacote são exemplos de layout, não registros oficiais. A faixa de demonstração é exibida em todas as páginas. Remova-a somente quando os dados reais estiverem conectados e validados.
+As escritas são permitidas somente ao UID administrativo definido em `firestore.rules`. As coleções públicas devem conter apenas informações próprias para publicação.
