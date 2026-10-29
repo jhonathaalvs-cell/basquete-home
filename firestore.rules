@@ -1,0 +1,73 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Conta administrativa autorizada pela organização.
+    // Este UID não é uma senha nem uma credencial privada.
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.uid == 'Bj9Upk54jMew52iJUWbKFpTF9DU2';
+    }
+
+    // Dados exibidos no portal público.
+    // A coleção jogadores não deve conter documentos pessoais sensíveis.
+    match /jogadores/{jogadorId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /equipes/{equipeId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /campeonatos/{campeonatoId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /temporadas/{temporadaId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /jogos/{jogoId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /estatisticas/{estatisticaId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /noticias/{noticiaId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Fluxos administrativos e dados potencialmente sensíveis.
+    // Nunca ficam disponíveis para usuários públicos.
+    match /transferencias/{transferenciaId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /creditos/{creditoId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /movimentacoes_creditos/{movimentacaoId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Coleções auxiliares administrativas futuras.
+    match /administracao/{documentoId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Bloqueia qualquer coleção não declarada acima.
+    match /{documento=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Acesso administrativo da Liga Local de Basquete.">
+  <link rel="icon" href="data:,">
+  <title>Acesso administrativo | Liga Local</title>
+  <link rel="stylesheet" href="./assets/admin.css">
+</head>
+<body class="auth-page">
+  <main class="auth-card" aria-labelledby="login-title">
+    <div class="brand-mark" aria-hidden="true">LL</div>
+    <p class="eyebrow">Liga Local · Administração</p>
+    <h1 id="login-title">Acesso administrativo</h1>
+    <p class="muted">Entre com a conta autorizada para gerenciar o campeonato.</p>
+
+    <form id="login-form" novalidate>
+      <label for="email">E-mail</label>
+      <input id="email" name="email" type="email" autocomplete="username" required>
+
+      <label for="password">Senha</label>
+      <div class="password-field">
+        <input id="password" name="password" type="password" autocomplete="current-password" required minlength="6">
+        <button id="toggle-password" class="icon-button" type="button" aria-label="Mostrar senha">Mostrar</button>
+      </div>
+
+      <button id="login-submit" class="primary-button" type="submit">Entrar</button>
+      <p id="login-status" class="form-status" role="alert" aria-live="polite"></p>
+    </form>
+    <button id="forgot-password" class="link-button" type="button">Esqueci minha senha</button>
+    <a class="back-link" href="/portal-publico-liga/index.html">← Voltar ao portal público</a>
+  </main>
+  <script type="module" src="./scripts/admin-auth.js"></script>
+</body>
+</html>
