@@ -38,14 +38,18 @@ async function loadDashboard() {
   document.querySelector("#players-count").textContent = players ? players.size : "—";
   const optional = await Promise.all(["equipes", "campeonatos", "transferencias"].map(readCollection));
   ["#teams-count", "#championships-count", "#transfers-count"].forEach((selector, index) => { document.querySelector(selector).textContent = optional[index] ? optional[index].size : "—"; });
-  if (players) renderPlayers(players);
+  if (players && document.querySelector("#players-table")) renderPlayers(players);
 }
 
 function field(data, names, fallback = "Não informado") { const name = names.find((key) => data[key] !== undefined && data[key] !== null && data[key] !== ""); return name ? String(data[name]) : fallback; }
 function escapeHtml(value) { return String(value).replace(/[&<>\"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char])); }
 function ensurePlayerForm() {
   const section = document.querySelector("#players");
+  if (!section || !section.querySelector(".section-heading") || !section.querySelector(".content-card")) return;
   if (document.querySelector("#new-player")) return;
+  if (!section.querySelector("#players-table thead tr")) {
+    section.querySelector(".content-card").innerHTML = '<div id="players-state" class="empty-state">Nenhum jogador cadastrado.</div><div id="players-table-wrap" hidden><div class="table-scroll"><table><thead><tr><th>Nome</th><th>Equipe</th><th>Posicao</th><th>Status</th></tr></thead><tbody id="players-table"></tbody></table></div></div>';
+  }
   section.querySelector(".section-heading").insertAdjacentHTML("beforeend", '<button id="new-player" class="primary-button compact" type="button">+ Novo jogador</button>');
   section.querySelector(".content-card").insertAdjacentHTML("beforebegin", '<div id="player-form-card" class="content-card" hidden><h2 id="player-form-title">Novo jogador</h2><form id="player-form" class="admin-form"><input id="player-id" type="hidden"><div class="form-grid"><div><label for="player-name">Nome *</label><input id="player-name" required></div><div><label for="player-position">Posição</label><input id="player-position"></div><div><label for="player-number">Número</label><input id="player-number" type="number" min="0"></div><div><label for="player-team">ID da equipe</label><input id="player-team" placeholder="Ex.: graja-bulls"></div></div><label class="checkbox-label"><input id="player-active" type="checkbox" checked> Jogador ativo e visível no portal</label><div class="form-actions"><button id="cancel-player" class="secondary-button" type="button">Cancelar</button><button id="save-player" class="primary-button compact" type="submit">Salvar jogador</button></div></form></div>');
   section.querySelector("#players-table thead tr").insertAdjacentHTML("beforeend", "<th>Ações</th>");

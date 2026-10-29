@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,13 @@
   <title>Painel administrativo | Liga Local</title>
   <link rel="stylesheet" href="./assets/admin.css">
 </head>
+
 <body class="admin-page">
   <div id="app-loading" class="screen-message">Verificando sessão...</div>
   <div id="admin-app" hidden>
     <aside class="sidebar" aria-label="Navegação administrativa">
-      <a class="sidebar-brand" href="/admin.html"><span class="brand-mark small">LL</span><span><strong>Liga Local</strong><small>Administração</small></span></a>
+      <a class="sidebar-brand" href="/admin.html"><span class="brand-mark small">LL</span><span><strong>Liga
+            Local</strong><small>Administração</small></span></a>
       <nav>
         <button class="nav-item active" data-section="dashboard">Dashboard</button>
         <button class="nav-item" data-section="players">Jogadores</button>
@@ -24,24 +27,84 @@
       <button id="logout" class="logout-button" type="button">Sair</button>
     </aside>
     <main class="admin-main">
-      <header class="admin-header"><div><p class="eyebrow">Painel administrativo</p><h1 id="page-title">Dashboard</h1></div><span id="user-email" class="user-pill"></span></header>
+      <header class="admin-header">
+        <div>
+          <p class="eyebrow">Painel administrativo</p>
+          <h1 id="page-title">Dashboard</h1>
+        </div><span id="user-email" class="user-pill"></span>
+      </header>
       <p id="global-status" class="form-status" role="status" aria-live="polite"></p>
       <section id="dashboard" class="admin-section active-section">
         <div class="summary-grid">
-          <article class="summary-card"><span>Jogadores cadastrados</span><strong id="players-count">—</strong></article>
-          <article class="summary-card"><span>Equipes</span><strong id="teams-count">—</strong><small>coleção ainda não disponível</small></article>
-          <article class="summary-card"><span>Campeonatos ativos</span><strong id="championships-count">—</strong><small>coleção ainda não disponível</small></article>
-          <article class="summary-card"><span>Transferências pendentes</span><strong id="transfers-count">—</strong><small>módulo não implementado</small></article>
+          <article class="summary-card"><span>Jogadores cadastrados</span><strong id="players-count">—</strong>
+          </article>
+          <article class="summary-card"><span>Equipes</span><strong id="teams-count">—</strong><small>coleção ainda não
+              disponível</small></article>
+          <article class="summary-card"><span>Campeonatos ativos</span><strong
+              id="championships-count">—</strong><small>coleção ainda não disponível</small></article>
+          <article class="summary-card"><span>Transferências pendentes</span><strong
+              id="transfers-count">—</strong><small>módulo não implementado</small></article>
         </div>
-        <div class="content-card"><h2>Visão geral</h2><p class="muted">Use a navegação para acessar as áreas administrativas. Os dados exibidos são carregados do Firestore quando a coleção correspondente existe e está autorizada.</p></div>
+        <div class="content-card">
+          <h2>Visão geral</h2>
+          <p class="muted">Use a navegação para acessar as áreas administrativas. Os dados exibidos são carregados do
+            Firestore quando a coleção correspondente existe e está autorizada.</p>
+        </div>
       </section>
-      <section id="players" class="admin-section" hidden><div class="section-heading"><div><p class="eyebrow">Cadastro manual</p><h2>Jogadores</h2></div></div><div class="content-card"><div id="players-state" class="empty-state">Carregando jogadores...</div><div id="players-table-wrap" hidden><div class="table-scroll"><table><thead><tr><th>Nome</th><th>Equipe</th><th>Posição</th><th>Status</th></tr></thead><tbody id="players-table"></tbody></table></div></div></div></section>
-      <section id="teams" class="admin-section" hidden><div class="content-card empty-state"><h2>Equipes</h2><p>A estrutura está preparada. O CRUD será habilitado após a definição do modelo de equipes e das regras do Firestore.</p></div></section>
-      <section id="championships" class="admin-section" hidden><div class="content-card empty-state"><h2>Campeonatos</h2><p>Nenhuma coleção de campeonatos foi identificada no projeto.</p></div></section>
-      <section id="transfers" class="admin-section" hidden><div class="content-card empty-state"><h2>Transferências</h2><p>Este módulo está reservado para propostas, aprovações e histórico de movimentações.</p></div></section>
-      <section id="credits" class="admin-section" hidden><div class="content-card empty-state"><h2>Créditos virtuais</h2><p>Este módulo será implementado somente com um modelo contábil e regras transacionais definidos.</p></div></section>
+      <section id="players" class="admin-section" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Cadastro manual</p>
+            <h2>Jogadores</h2>
+          </div>
+        </div>
+        <div class="content-card">
+          <div id="players-state" class="empty-state">Carregando jogadores...</div>
+          <div id="players-table-wrap" hidden>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Equipe</th>
+                    <th>Posição</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="players-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="teams" class="admin-section" hidden>
+        <div class="content-card empty-state">
+          <h2>Equipes</h2>
+          <p>A estrutura está preparada. O CRUD será habilitado após a definição do modelo de equipes e das regras do
+            Firestore.</p>
+        </div>
+      </section>
+      <section id="championships" class="admin-section" hidden>
+        <div class="content-card empty-state">
+          <h2>Campeonatos</h2>
+          <p>Nenhuma coleção de campeonatos foi identificada no projeto.</p>
+        </div>
+      </section>
+      <section id="transfers" class="admin-section" hidden>
+        <div class="content-card empty-state">
+          <h2>Transferências</h2>
+          <p>Este módulo está reservado para propostas, aprovações e histórico de movimentações.</p>
+        </div>
+      </section>
+      <section id="credits" class="admin-section" hidden>
+        <div class="content-card empty-state">
+          <h2>Créditos virtuais</h2>
+          <p>Este módulo será implementado somente com um modelo contábil e regras transacionais definidos.</p>
+        </div>
+      </section>
     </main>
   </div>
   <script type="module" src="./scripts/admin.js"></script>
 </body>
+
 </html>
